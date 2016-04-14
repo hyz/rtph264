@@ -46,7 +46,7 @@ static AVStream *add_audio_stream(AVFormatContext *oc, enum CodecID codec_id)
 
     c = st->codec;
     c->codec_id = codec_id;
-    c->codec_type = CODEC_TYPE_AUDIO;
+    c->codec_type = AVMEDIA_TYPE_VIDEO;
 
     /* put sample parameters */
     c->bit_rate = 64000;
@@ -138,7 +138,7 @@ static AVStream *add_video_stream(AVFormatContext *oc, enum CodecID codec_id)
 
     c = st->codec;
     c->codec_id = codec_id;
-    c->codec_type = CODEC_TYPE_VIDEO;
+    c->codec_type = AVMEDIA_TYPE_VIDEO;
 
     /* put sample parameters */
     c->bit_rate = 4000000;
@@ -290,7 +290,7 @@ void Mp4mux_Open(const char *filename)
   //open_audio(context, audio_stream);
   
   int err;
-  if((err = url_fopen(&context->pb, filename, URL_WRONLY)) < 0) {
+  if((err = url_fopen(&context->pb, filename, 0/*URL_WRONLY*/)) < 0) {
     print_error(filename, err);
     fprintf(stderr, "Could not open '%s'\n", filename);
     exit(EXIT_FAILURE);
@@ -319,7 +319,7 @@ void Mp4Mux_WriteVideo(AVPacket *pkt, unsigned int timestamp)
 //    pkt->pts = av_rescale_q(c->coded_frame->pts, c->time_base, video_stream->time_base);
 
 //  if(c->coded_frame->key_frame)
-//    pkt->flags |= PKT_FLAG_KEY;
+//    pkt->flags |= AV_PKT_FLAG_KEY;
   pkt->stream_index= video_stream->index;
 
   /* write the compressed frame in the media file */

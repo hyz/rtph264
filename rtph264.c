@@ -223,7 +223,7 @@ void RtpH264_Run(int sfd, RtpH264_OnPicture onPicture)
 //printf("nalu = %d\n", fu_header & 0x1f);
           
           if((fu_header & 0x1f) == 7)
-            avpkt.flags |= PKT_FLAG_KEY;
+            avpkt.flags |= AV_PKT_FLAG_KEY;
 //          avpkt.pts = frame_count++;
 //printf("avpkt.pts = %d\n", avpkt.pts);          
           break;
